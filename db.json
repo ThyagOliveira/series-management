@@ -19,42 +19,11 @@
       "comments": "Bom para descontrair"
     },
     {
-      "id": 3,
-      "name": "Breaking Bad",
-      "status": "watched",
-      "genre": "Drama",
-      "comments": "Say My Name - melhor cena"
-    },
-    {
       "id": 4,
       "name": "Better Call Saul",
       "status": "toWatch",
       "genre": "Drama",
       "comments": "Galera fala bem"
-    },
-    {
-      "id": 5
-    },
-    {
-      "name": "asd",
-      "status": "watched",
-      "genre": "Comédia",
-      "comments": "sadas",
-      "id": 6
-    },
-    {
-      "name": "dasdas",
-      "status": "watched",
-      "genre": "Comédia",
-      "comments": "asd",
-      "id": 7
-    },
-    {
-      "name": "EASd",
-      "status": "watched",
-      "genre": "Ação",
-      "comments": "AEdsa",
-      "id": 8
     }
   ],
   "genres": [

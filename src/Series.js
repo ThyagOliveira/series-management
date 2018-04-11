@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import api from './Api'
 
@@ -16,11 +17,13 @@ class Series extends Component {
             isLoading: false,
             series: []
         }
-    }
 
-    componentDidMount() {
+        this.renderSeries = this.renderSeries.bind(this)
+        this.loadData = this.loadData.bind(this)
+    }
+    loadData() {
         this.setState({ isLoading: true })
-        api.loadSeriesByGenre(this.props.match.params.genres)
+        api.loadSeriesByGenre(this.props.match.params.genre)
             .then(res => {
                 this.setState({
                     isLoading: false,
@@ -28,9 +31,19 @@ class Series extends Component {
                 })
             })
     }
+    componentDidMount() {
+        this.loadData()
+            
+    }
+    deleteSeries(id) {
+        api.deleteSeries(id)
+            .then(res => this.loadData())
+        
+    }
+
     renderSeries(series) {
         return (
-            <div className="item  col-xs-4 col-lg-4">
+            <div key={series.id} className="item  col-xs-4 col-lg-4">
                 <div className="thumbnail">
                     <img className="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
                     <div className="caption">
@@ -38,10 +51,12 @@ class Series extends Component {
                             {series.name}</h4>
                         <div className="row">
                             <div className="col-xs-12 col-md-6">
-                                <p className="lead">{series.genres}/ {status[series.status]}</p>
+                                <p className="lead">{series.genre}<br /> {status[series.status]}</p>
                             </div>
+                            <br />
                             <div className="col-xs-12 col-md-6">
-                                <a className="btn btn-success" href="">Gerenciar</a>
+                                <Link className="btn btn-success" to={'/series-edit/'+series.id}>Editar</Link>
+                                <a className="btn btn-success" onClick={() => this.deleteSeries(series.id)}>Excluir</a>
                             </div>
                         </div>
                     </div>
@@ -52,7 +67,17 @@ class Series extends Component {
     render() {
         return (
             <section id="intro" className="intro-section">
-                <h1> Series {this.props.match.params.genres}</h1>
+                <h1> Series {this.props.match.params.genre}</h1>
+                {
+                    this.state.isLoading &&
+                    <span> Carregando Dados... </span>
+                }
+                {
+                    !this.state.isLoading && this.state.series.length == 0 &&
+                    <div className='alert alert-info'>
+                        Nenhuma Série Encontrada.
+                    </div>
+                }
 
                 <div id="series" className="row list-group">
                     {!this.state.isLoading &&
